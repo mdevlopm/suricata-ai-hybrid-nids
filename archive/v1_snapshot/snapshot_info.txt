@@ -1,0 +1,4 @@
+v1 Snapshot - 2026-07-04
+macro_f1: 0.3649
+bot_webattack_confusion: 47%
+known_limitation: Bot/WebAttack flow-stat'ta ayrismiyor

@@ -1,0 +1,31 @@
+# ── Data Directories (Multi-Gigabyte / Terabyte Raw PCAPs and extracted EVE) ──
+data/
+eve_out/
+*.pcap
+*.pcap.gz
+*.pcapng
+
+# ── Python Virtual Environments & Caches ──
+venv/
+venv311/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ── Logs & Temporary Files ──
+*.log
+*.tmp
+*.temp
+/tmp/
+.coverage
+htmlcov/
+.system_generated/
+
+# ── OS & IDE ──
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

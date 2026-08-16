@@ -1,0 +1,32 @@
+%YAML 1.1
+---
+classification-file: /tmp/suricata_dummy/classification.config
+reference-config-file: /tmp/suricata_dummy/reference.config
+
+vars:
+  address-groups:
+    HOME_NET: "[192.168.0.0/16,10.0.0.0/8]"
+    EXTERNAL_NET: "!$HOME_NET"
+
+default-log-dir: /tmp/suricata_flow
+
+flow:
+  timeout:
+    default: 10
+    tcp: 10
+    udp: 10
+    icmp: 10
+
+outputs:
+  - eve-log:
+      enabled: yes
+      filetype: regular
+      types:
+        - flow:
+            tcp-flags: yes
+        - http:
+            extended: yes
+        - tls:
+            extended: yes
+        - dns:
+        - stats

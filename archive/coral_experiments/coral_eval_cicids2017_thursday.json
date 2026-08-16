@@ -1,0 +1,15 @@
+{
+  "dataset": "CICIDS2017_Thursday_WorkingHours",
+  "fp_before": 0.9990815154994259,
+  "fp_after": 0.007462686567164179,
+  "improvement_pct": 99.25304527694783,
+  "fp_count_before": 17404,
+  "fp_count_after": 130,
+  "frobenius": 1272.4316839359076,
+  "trace_ratio": 33.64586460005997,
+  "cond_source": 1069750.7828722517,
+  "cond_target": 126677885.12936196,
+  "n_target": 17420,
+  "n_source": 50000,
+  "threshold": 0.84
+}

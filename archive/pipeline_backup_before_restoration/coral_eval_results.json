@@ -1,0 +1,14 @@
+{
+  "fp_before": 1.0,
+  "fp_after": 0.0,
+  "improvement_pct": 100.0,
+  "fp_count_before": 314,
+  "fp_count_after": 0,
+  "frobenius": 5961.2633307358765,
+  "trace_ratio": 140.3007183772515,
+  "cond_source": 1069750.7828722517,
+  "cond_target": 596273671.5091426,
+  "n_benign": 314,
+  "n_source": 50000,
+  "threshold": 0.84
+}

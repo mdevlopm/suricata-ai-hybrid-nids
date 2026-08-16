@@ -1,0 +1,15 @@
+{
+  "production_threshold": 0.66,
+  "pickle_threshold": 0.84,
+  "fp_before": 0.7684858550165331,
+  "fp_after": 0.0014815567098687807,
+  "improvement_pct": 99.80721093300579,
+  "fp_count_before": 257276,
+  "fp_count_after": 496,
+  "frobenius": 163041.645746113,
+  "trace_ratio": 3714.540266241693,
+  "cond_source": 1069750.7828722517,
+  "cond_target": 16304653450.390879,
+  "n_target": 334783,
+  "n_source": 50000
+}
