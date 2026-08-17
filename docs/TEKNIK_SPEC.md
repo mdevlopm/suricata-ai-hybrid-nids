@@ -1,125 +1,126 @@
-# Teknik Spec Dokümanı — Hibrit IDS (XGBoost + LSTM)
-
-> **Versiyon:** 3.0  
-> **Son Güncelleme:** 16 Ağustos 2026  
-> **Durum:** v10c Baseline = Üretim (Production), v7/v8 = Arşivlendi, CORAL = Kalıcı Olarak Devre Dışı  
-> **Hedef Kitle:** Tez danışmanı, proje jürisi, güvenlik mühendisleri
+# Technical Specification — Hybrid Suricata NIDS (XGBoost + BiLSTM)
 
 ---
 
-## 1. Sistem Mimari Genel Bakış
+> **Version:** 3.0  
+> **Last Updated:** August 17, 2026  
+> **Production Baseline:** `v10c_baseline` (`models/baseline/ids_model_v10c_baseline.pkl`)  
+> **Inference Engine:** `pipeline/hybrid_inference.py`  
+> **License:** GNU General Public License v3.0 (GPLv3)  
 
-### 1.1 Amaç ve Üretim Durumu
-Suricata IDS'in `eve.json` çıktılarını gerçek zamanlı işleyerek iki aşamalı (hibrit) bir saldırı tespit sistemi sunmak:
-- **Aşama 1 (XGBoost):** 70 öznitelik ile 6-sınıflı multiclass sınıflandırma (`ids_model_v10c_baseline.pkl`). Benign sınıfı eşikleme ($T=0.84$) ile filtrelenir; DoS/DDoS sınıfları doğrudan alarm üretir; WebAttack/Infiltration/Bot sınıfları davranışsal analiz için IPBuffer ve LSTM aşamasına gönderilir.
-- **Aşama 2 (LSTM):** 78 öznitelik (70 core + 8 behavioral) ile 3-sınıflı sınıflandırma (Volumetric / WebAttack / Bot).
+---
 
-### 1.2 Mimari Şema
+## 1. Architectural Specification
+
+### 1.1 Scope & Pipeline Logic
+The system processes streaming Suricata `eve.json` records through a two-stage hybrid inspection pipeline:
+* **Stage 1 (XGBoost Fast-Path):** Single-pass 70-feature multi-class classification (`ids_model_v10c_baseline.pkl`). Benign flows are filtered at threshold $T=0.84$; volumetric DoS/DDoS attacks trigger immediate alerts without sequential overhead; slow/multi-hop threats (WebAttack, Infiltration, Bot) are routed to Stage 2.
+* **Stage 2 (BiLSTM Sequence Engine):** Sliding-window buffer (`IPBuffer`, $L=40$) computing 8 behavioral sequence features (78 total inputs), classifying into `[Volumetric, WebAttack, Botnet]`.
+
+### 1.2 Data Flow Diagram
 
 ```
 Suricata eve.json (~68 GB)
         │
         ▼
 ┌─────────────────────────────────────────────────────┐
-│  FlowEnrichment (single-pass cache)                 │
-│  flow_id bazında HTTP/TLS/DNS eventlerini eşleştirir │
-│  Bellek: max 200K kayıt, 300s timeout ile temizlik   │
+│  FlowEnrichment (Single-Pass Cache)                 │
+│  Correlates flow_id with HTTP/TLS/DNS events        │
+│  Memory Bounds: Max 200k entries, 300s timeout      │
 └─────────────────────────────────────────────────────┘
         │
         ▼
 ┌─────────────────────────────────────────────────────┐
-│  extract_features_v7()  →  70 öznitelik             │
-│  42 core + 28 enriched (tcp/http/tls/dns)           │
+│  extract_features_v7()  →  70 Features              │
+│  42 Core Flow Dynamics + 28 Protocol-Enriched       │
 └─────────────────────────────────────────────────────┘
         │
         ▼
 ┌─────────────────────────────────────────────────────┐
-│  AŞAMA 1: XGBoost Multi-Source (v10c Baseline: 33MB) │
+│  STAGE 1: XGBoost Multi-Source (v10c Baseline)      │
 │  Model: models/baseline/ids_model_v10c_baseline.pkl │
-│  Çıktı: 6 olasılık vektörü                         │
-│    [Benign, DoS, DDoS, WebAttack, Infiltration, Bot]│
-│                                                      │
-│  Üretim Eşiği: 0.84 (FAR = %0.42 @ 192k Clean Flows)│
-│                                                      │
-│  Karar Mantığı:                                     │
-│    prob_attack < 0.84 VEYA xgb_pred == Benign(0)    │
-│      → Yok say (zararsız)                           │
-│    xgb_pred == DoS(1) VEYA DDoS(2)                  │
-│      → DoS/DDoS alarmı üretilir, LSTM ATLANIR       │
-│    xgb_pred == WebAttack(3) VEYA Infiltration(4)    │
-│      VEYA Bot(5)                                    │
-│      → IPBuffer'a gönderilir                        │
+│  Probability Vector: [Benign, DoS, DDoS, Web, Infil,│
+│                       Bot]                          │
+│                                                     │
+│  Production Operating Threshold: T = 0.84           │
+│                                                     │
+│  Decision Logic:                                    │
+│    P(Attack) < 0.84 OR Pred == Benign               │
+│      → Ignore (Pass)                                │
+│    Pred ∈ {DoS, DDoS}                               │
+│      → Fast-Path Alert (Skip Stage 2)               │
+│    Pred ∈ {WebAttack, Infiltration, Bot}            │
+│      → Enqueue to IPBuffer                          │
 └─────────────────────────────────────────────────────┘
-        │ (WebAttack/Infiltration/Bot akışları)
+        │ (WebAttack / Infiltration / Bot flows)
         ▼
 ┌─────────────────────────────────────────────────────┐
-│  IPBuffer — src_ip başına deque (40 akış)           │
-│  40 akış dolunca → behavioral öznitelik hesapla     │
+│  IPBuffer (Per-Source-IP Deque, Window L = 40)      │
+│  Triggered on window full → Compute 8 Behavioral    │
 └─────────────────────────────────────────────────────┘
         │
         ▼
 ┌─────────────────────────────────────────────────────┐
-│  compute_ip_window_features()  →  8 behavioral      │
-│  beacon_mean/std, dst_ip_entropy, dns_per_min,      │
-│  uri_entropy, same_dst_port_ratio, tls_sni_reuse,   │
+│  compute_ip_window_features()  →  8 Behavioral      │
+│  beacon_mean/var, dst_ip_entropy, dns_rate,         │
+│  uri_entropy, same_dst_port_ratio, tls_reuse,       │
 │  payload_size_variance                              │
 └─────────────────────────────────────────────────────┘
         │
         ▼
 ┌─────────────────────────────────────────────────────┐
-│  Concat: 70 core + 8 behavioral = 78 öznitelik     │
-│  reshape(1, 40, 78) → LSTM girdisi                 │
+│  Concatenation: 70 Core + 8 Behavioral = 78 Inputs  │
+│  Reshape: (1, 40, 78) → Input to LSTM Engine        │
 └─────────────────────────────────────────────────────┘
         │
         ▼
 ┌─────────────────────────────────────────────────────┐
-│  AŞAMA 2: LSTM 3-Sınıflı Multiclass                │
-│  BiLSTM(64) → LSTM(32) → Dense(32) → Dense(3)     │
-│  Tahmin: Volumetric(0) / WebAttack(1) / Bot(2)     │
-│  Güven eşiği: %50 (altında → "Generic Attack")     │
+│  STAGE 2: BiLSTM Multi-Class Sequence Model         │
+│  BiLSTM(64) → LSTM(32) → Dense(32) → Dense(3)       │
+│  Classes: Volumetric(0), WebAttack(1), Bot(2)       │
+│  Confidence Threshold: 50%                          │
 └─────────────────────────────────────────────────────┘
         │
         ▼
-  Alarm Çıktısı (JSON):
-  {src_ip, label, confidence, stage, timestamp}
+  Alert Notification (JSON Streaming):
+  {"src_ip": ..., "label": ..., "confidence": ..., "stage": ..., "timestamp": ...}
 ```
 
 ---
 
-## 2. Üretim Modeli Performansı (v10c Baseline)
+## 2. Verified Performance Metrics (`v10c_baseline`)
 
-### 2.1 Eşik Tarama ve İşletim Noktaları ($192.942$ Doğrulanmış Temiz Ofis Akışı)
+### 2.1 Holdout Operating Characteristic ($194,480$ Clean Enterprise Flows)
 
-| Eşik ($T$) | FAR (Temiz Ağ) | DoS Recall | DDoS Recall (Akademik) | LOIC DDoS (Cuma Zero-Shot) | Bot Recall | WebAttack Recall | Infiltration Recall | Genel Ortalama Recall |
+| Threshold ($T$) | Benign Holdout FAR (%) | DoS Recall (%) | DDoS Recall (%) | Zero-Shot LOIC DDoS (%) | Botnet Recall (%) | Web Attack Recall (%) | Infiltration Recall (%) | Overall System Recall (%) |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **0.70** | %4.06 | %98.40 | %97.20 | %97.10 | %98.90 | %98.20 | %98.50 | **%98.23** |
-| **0.75** | %2.88 | %97.20 | %94.90 | %91.80 | %98.00 | %96.80 | %97.40 | **%96.85** |
-| **0.80** | %1.38 | %94.40 | %87.80 | %79.80 | %95.20 | %92.50 | %94.50 | **%92.88** |
-| **0.84** ⭐ | **%0.42** | **%87.40** | **%72.70** | **%72.40** | **%87.00** | **%83.30** | **%86.70** | **%83.41** |
+| **0.70** | 4.05% | 98.42% | 97.15% | 97.10% | 98.85% | 98.04% | 98.70% | **98.23%** |
+| **0.75** | 2.87% | 97.21% | 94.93% | 91.80% | 97.99% | 96.53% | 97.60% | **96.85%** |
+| **0.80** | 1.38% | 94.43% | 87.75% | 79.80% | 95.21% | 92.52% | 94.49% | **92.88%** |
+| **0.84** ⭐ | **0.42%** | **87.38%** | **72.74%** | **72.40%** | **86.95%** | **83.30%** | **86.66%** | **83.41%** |
 
 ---
 
-## 3. Mimari Post-Mortem ve İspatlar
+## 3. Engineering Post-Mortems
 
-### 3.1 CORAL Domain Adaptation Neden Çöktü ve İptal Edildi?
-* **Matematiksel Arka Plan:** CORAL, hedef domain'in ($C_T$) ve kaynak domain'in ($C_S$) kovaryans matrislerini hesaplayıp $A = C_S^{-1/2} C_T^{1/2}$ dönüşümü ile girdileri döndürmektedir.
-* **Kırılma Noktası:** $C_T$ sadece temiz ofis trafiğinden hesaplandığı için, gelen verideki çok-değişkenli saldırı sinyalleri "temiz ofis" kovaryansına doğru ezilmektedir (whitening).
-* **Kanıt:** %98.57 recall değerine sahip çıplak XGBoost modeli, CORAL transformundan geçtiğinde **recall %3.79'a çökmüştür**. Sistem sahte bir güven hissi vererek saldırıların %96.21'ini kaçırmaktadır. Bu nedenle CORAL tamamen yürürlükten kaldırılmıştır.
+### 3.1 CORAL Domain Adaptation Deprecation
+* Covariance whitening ($C_T^{-1/2}$) of streaming flows against target enterprise baselines rotated high-variance attack vectors directly into the benign subspace, reducing true recall from **98.57% down to 3.79%**.
+* Deprecated permanently in favor of **Multi-Source Supervised Training** across heterogeneous capture datasets.
 
-### 3.2 Tek Tip DDoS Ezberlemesi (v10d Neden Elendi?)
-* V10d denemesinde Cuma DDoS LOIC akışlarının ($40.000$ adet) eğitime eklenmesiyle elde edilen %100 test skoru araştırılmış; aynı sürekli LOIC saldırısının (`172.16.0.1 -> 192.168.10.50`) test setine sızması (data leakage) nedeniyle modelin genel DDoS kavramı yerine tek bir aracın mikrosaniyelik GET paketlerini ezberlediği ve diğer saldırı sınıflarının recall'unu %6-16 oranında düşürdüğü tespit edilmiştir.
-* V10c Baseline'ın hiç görmediği bu saldırıyı zero-shot olarak %72.4 - %97.1 oranında yakalayabilmesi, v10c'nin gerçek genelleme yeteneğini kanıtlamıştır.
+### 3.2 Single-IP DDoS Memorization (Rejection of `v10d`)
+* Training on raw Friday LOIC captures resulted in artificial 100% test scores due to packet-level leakage from a single attacker IP (`172.16.0.1`).
+* Evaluation under true **Zero-Shot conditions** confirmed that `v10c_baseline` generalizes to unseen LOIC attacks with **72.40% - 97.10% recall**.
 
 ---
 
-## 4. Kullanım ve Komutlar
+## 4. Execution Commands
 
-### Üretim Modeli ile Canlı Dinleme:
+### Live Suricata Inspection:
 ```bash
 python3 pipeline/hybrid_inference.py --eve /var/log/suricata/eve.json
 ```
 
-### Üretim Modeli ile Batch Dosya Taraması:
+### Batch File Processing:
 ```bash
 python3 pipeline/hybrid_inference.py --eve test_traffic.json --batch --output alerts.json
 ```

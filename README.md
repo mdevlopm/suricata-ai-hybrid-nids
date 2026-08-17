@@ -6,7 +6,7 @@
 [![Production Status](https://img.shields.io/badge/Production_Model-v10c_Baseline-green.svg)](models/baseline/)
 [![False Alarm Rate](https://img.shields.io/badge/FAR-0.42%25%20%40%20T%3D0.84-brightgreen.svg)](docs/THRESHOLD_AND_OPERATING_CURVES.md)
 [![Attack Recall](https://img.shields.io/badge/Recall-83.41%25%20%40%20T%3D0.84-success.svg)](docs/THRESHOLD_AND_OPERATING_CURVES.md)
-[![License](https://img.shields.io/badge/License-Proprietary_Research-lightgrey.svg)](#)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
 ---
 
@@ -235,6 +235,10 @@ python3 pipeline/hybrid_inference.py \
 
 ---
 
-## 9. License & Research Attribution
+## 9. Open-Source License & Copyleft Terms
 
-This repository is maintained for cybersecurity research and engineering benchmarking. All intellectual property, models, and custom feature extractors are proprietary.
+This project is licensed under the **GNU General Public License v3.0 (GPLv3)**.
+
+* **Open-Source Guarantee:** You are free to inspect, run, modify, and distribute this software and its associated model artifacts.
+* **Copyleft Requirement:** In accordance with the GNU GPLv3, any derivative works, modified versions, or larger projects built using this software or its components **must also be released as free and open-source software under the terms of the GNU General Public License v3.0**.
+* See the full license text in the [`LICENSE`](LICENSE) file.
