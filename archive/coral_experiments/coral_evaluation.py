@@ -37,10 +37,10 @@ def run_coral_comparison():
     print("=" * 70)
     
     # Paths
-    model_path = "/run/media/mehmet/siber data1/ai modeli xgboost/ids_model_v7_final.pkl"
-    source_eve = "/run/media/mehmet/siber data1/ai modeli xgboost/eve_labeled/full_dataset/eve.json"
-    target_eve = "/run/media/mehmet/siber data1/ai modeli xgboost/eve_labeled/test_20/eve_test20.json"
-    target_labels = "/run/media/mehmet/siber data1/ai modeli xgboost/eve_labeled/test_20/labels.json"
+    model_path = "./ids_model_v7_final.pkl"
+    source_eve = "./eve_labeled/full_dataset/eve.json"
+    target_eve = "./eve_labeled/test_20/eve_test20.json"
+    target_labels = "./eve_labeled/test_20/labels.json"
     
     # Load model
     print(f"\n[1/6] Loading XGBoost model...")
@@ -129,7 +129,7 @@ def run_coral_comparison():
         'threshold': float(threshold),
     }
     
-    with open('/run/media/mehmet/siber data1/ai modeli xgboost/coral_eval_results.json', 'w') as f:
+    with open('./coral_eval_results.json', 'w') as f:
         json.dump(results, f, indent=2)
     print("\nResults saved to coral_eval_results.json")
     

@@ -12,7 +12,7 @@ import numpy as np
 from pathlib import Path
 from datetime import datetime
 import sys
-sys.path.insert(0, "/run/media/mehmet/siber data1/ai modeli xgboost/pipeline")
+sys.path.insert(0, "./pipeline")
 
 from coral_domain_adaptation import CORALDomainAdapter, load_unlabeled_streams
 
@@ -39,10 +39,10 @@ def main():
     print("=" * 70)
 
     # Paths
-    model_path = "/run/media/mehmet/siber data1/ai modeli xgboost/models/ids_model_v7_final.pkl"
-    source_eve = "/run/media/mehmet/siber data1/ai modeli xgboost/data/eve/full_dataset/eve.json"
+    model_path = "./models/ids_model_v7_final.pkl"
+    source_eve = "./data/eve/full_dataset/eve.json"
     # Use the Suricata-processed Thursday pcap output
-    thursday_eve = "/run/media/mehmet/siber data1/ai modeli xgboost/data/eve/cicids2017_thursday_eve.json"
+    thursday_eve = "./data/eve/cicids2017_thursday_eve.json"
 
     # Load model
     print("\n[1/5] Loading XGBoost v7 model...")
@@ -133,7 +133,7 @@ def main():
         'n_source': int(len(X_source)),
     }
 
-    output_path = "/run/media/mehmet/siber data1/ai modeli xgboost/coral_eval_final.json"
+    output_path = "./coral_eval_final.json"
     with open(output_path, 'w') as f:
         json.dump(results, f, indent=2)
     print(f"\nResults saved to {output_path}")

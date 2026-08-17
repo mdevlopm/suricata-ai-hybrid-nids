@@ -1,7 +1,7 @@
 # Hibrit NIDS Projesi — Master Belge
 
 **Son Güncelleme:** 16 Ağustos 2026  
-**Konum:** `/run/media/mehmet/siber data1/ai modeli xgboost`  
+**Konum:** `.`  
 **Üretim Modeli (Production):** `models/baseline/ids_model_v10c_baseline.pkl`  
 **Çıkarım Motoru (Inference):** `pipeline/hybrid_inference.py` (Varsayılan Model: `v10c_baseline`, Eşik: `0.84`)
 

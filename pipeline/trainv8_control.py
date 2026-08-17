@@ -55,13 +55,10 @@ log = logging.getLogger("trainv8")
 #     eve_Infiltration.json
 #     eve_Bot.json
 # ============================================================
-DEFAULT_DATA_ROOT = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/relabeled_combined")  # 🔴 CHANGE ME
-
-# 🔴 REAL PATH REQUIRED: Unlabeled production eve.json for CORAL target domain (50k+ flows)
-DEFAULT_TARGET_EVE = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/eve/cicids2017_thursday_eve.json")  # 🔴 CHANGE ME
-
-# Output model path
-DEFAULT_OUT_MODEL = Path("/run/media/mehmet/siber data1/ai modeli xgboost/ids_model_v8_final.pkl")
+BASE_DIR = Path(__file__).resolve().parent.parent
+DEFAULT_DATA_ROOT = BASE_DIR / "data/relabeled_combined"
+DEFAULT_TARGET_EVE = BASE_DIR / "data/eve/cicids2017_thursday_eve.json"
+DEFAULT_OUT_MODEL = BASE_DIR / "models/ids_model_v8_final.pkl"
 
 # Class mapping (matches relabel_cicids2018.py output)
 CLASS_MAP = {

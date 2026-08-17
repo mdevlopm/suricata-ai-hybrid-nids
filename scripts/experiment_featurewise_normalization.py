@@ -31,10 +31,11 @@ import xgboost as xgb
 
 from trainv8 import extract_features_v7, CLASS_MAP, INV_CLASS_MAP
 
-DATA_ROOT = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/relabeled_combined")
-SOURCE_EVE = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/eve/full_dataset/eve.json")
-THURSDAY_EVE = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/eve/cicids2017_thursday_eve.json")
-RAW_PCAP_DIR = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/raw_pcap")
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_ROOT = BASE_DIR / "data/relabeled_combined"
+SOURCE_EVE = BASE_DIR / "data/eve/full_dataset/eve.json"
+THURSDAY_EVE = BASE_DIR / "data/eve/cicids2017_thursday_eve.json"
+RAW_PCAP_DIR = BASE_DIR / "data/raw_pcap"
 
 print("=" * 100)
 print("EXPERIMENT: FEATURE-WISE (MARGINAL) MEAN/STD NORMALIZATION VS FULL CORAL")

@@ -33,9 +33,9 @@ def run_coral_on_cicids2017_thursday():
     print("CORAL EVALUATION — CICIDS2017 Thursday WorkingHours (ALL BENIGN)")
     print("=" * 70)
     
-    model_path = "/run/media/mehmet/siber data1/ai modeli xgboost/ids_model_v7_final.pkl"
-    source_eve = "/run/media/mehmet/siber data1/ai modeli xgboost/eve_labeled/full_dataset/eve.json"
-    target_eve = "/run/media/mehmet/siber data1/ai modeli xgboost/eve_labeled/cicids2017_thursday_eve.json"
+    model_path = "./ids_model_v7_final.pkl"
+    source_eve = "./eve_labeled/full_dataset/eve.json"
+    target_eve = "./eve_labeled/cicids2017_thursday_eve.json"
     
     # Load model
     print("\n[1/5] Loading XGBoost v7 model...")
@@ -114,7 +114,7 @@ def run_coral_on_cicids2017_thursday():
         'threshold': float(threshold),
     }
     
-    with open('/run/media/mehmet/siber data1/ai modeli xgboost/coral_eval_cicids2017_thursday.json', 'w') as f:
+    with open('./coral_eval_cicids2017_thursday.json', 'w') as f:
         json.dump(results, f, indent=2)
     print("\nResults saved to coral_eval_cicids2017_thursday.json")
     

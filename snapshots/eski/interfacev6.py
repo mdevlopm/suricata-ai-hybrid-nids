@@ -32,7 +32,7 @@ import numpy as np
 # ============================================================================
 # VARSAYILAN YOLLAR
 # ============================================================================
-DEFAULT_MODEL = Path("/run/media/mehmet/siber data1/ai modeli xgboost/ids_model_v6_final.pkl")
+DEFAULT_MODEL = Path("./ids_model_v6_final.pkl")
 DEFAULT_EVE   = Path("/var/log/suricata/eve.json")
 DEFAULT_OUT   = Path("/var/log/suricata/ai_alerts_v6.json")
 POLL_S        = 0.5  # polling araligi (saniye)

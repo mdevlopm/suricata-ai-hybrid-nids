@@ -18,9 +18,10 @@ from sklearn.model_selection import train_test_split
 
 from trainv8 import extract_features_v7, CLASS_MAP
 
-MODEL_PATH = Path("/run/media/mehmet/siber data1/ai modeli xgboost/models/ids_model_v8_final.pkl")
-DATA_ROOT = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/relabeled_combined")
-THURSDAY_EVE = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/eve/cicids2017_thursday_eve.json")
+BASE_DIR = Path(__file__).resolve().parent.parent
+MODEL_PATH = BASE_DIR / "models/ids_model_v8_final.pkl"
+DATA_ROOT = BASE_DIR / "data/relabeled_combined"
+THURSDAY_EVE = BASE_DIR / "data/eve/cicids2017_thursday_eve.json"
 
 with open(MODEL_PATH, 'rb') as f:
     bundle = pickle.load(f)

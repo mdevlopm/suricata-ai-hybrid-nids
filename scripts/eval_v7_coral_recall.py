@@ -22,10 +22,11 @@ from sklearn.model_selection import train_test_split
 from trainv8 import extract_features_v7, CLASS_MAP
 from coral_domain_adaptation import CORALDomainAdapter
 
-V7_MODEL_PATH = Path("/run/media/mehmet/siber data1/ai modeli xgboost/archive/models/ids_model_v7_final.pkl")
-CORAL_PATH = Path("/run/media/mehmet/siber data1/ai modeli xgboost/pipeline/coral_adapter.pkl")
-DATA_ROOT = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/relabeled_combined")
-THURSDAY_EVE = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/eve/cicids2017_thursday_eve.json")
+BASE_DIR = Path(__file__).resolve().parent.parent
+V7_MODEL_PATH = BASE_DIR / "archive/models/ids_model_v7_final.pkl"
+CORAL_PATH = BASE_DIR / "pipeline/coral_adapter.pkl"
+DATA_ROOT = BASE_DIR / "data/relabeled_combined"
+THURSDAY_EVE = BASE_DIR / "data/eve/cicids2017_thursday_eve.json"
 
 print("=" * 90)
 print("1. LOADING v7 MODEL & LIVE CORAL ADAPTER")

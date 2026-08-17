@@ -37,8 +37,8 @@ warnings.filterwarnings("ignore")
 
 # ── AYARLAR ───────────────────────────────────────────────────────────────────
 
-BASE_DIR = Path("/run/media/mehmet/siber data/ai modeli xgboost/pcap dosyaları ve veri setleri")
-OUT_MODEL = Path("/run/media/mehmet/siber data/ai modeli xgboost/ids_model_v2.pkl")
+BASE_DIR = Path("./pcap dosyaları ve veri setleri")
+OUT_MODEL = Path("./ids_model_v2.pkl")
 
 # Eve.json dosyaları ve label'ları
 EVE_FILES = {

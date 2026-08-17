@@ -4,14 +4,14 @@
 
 import pickle
 import sys
-sys.path.insert(0, '/run/media/mehmet/siber data1/ai modeli xgboost/pipeline')
+BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BASE_DIR / 'pipeline'))
 import numpy as np
-from pathlib import Path
 
 # Import CORAL adapter from trainv8 (has fallback inline)
 from trainv8 import CORALDomainAdapter
 
-MODEL_PATH = Path("/run/media/mehmet/siber data1/ai modeli xgboost/models/ids_model_v8_final.pkl")
+MODEL_PATH = BASE_DIR / "models/ids_model_v8_final.pkl"
 
 # Load bundle
 print(f"Loading {MODEL_PATH}...")

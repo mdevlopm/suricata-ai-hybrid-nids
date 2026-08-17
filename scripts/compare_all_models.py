@@ -18,9 +18,8 @@ import json
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-from trainv8 import extract_features_v7, CLASS_MAP
-
-DATA_ROOT = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/relabeled_combined")
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_ROOT = BASE_DIR / "data/relabeled_combined"
 
 # Load 20k per class for fast, exact validation split
 X_list, y_list = [], []

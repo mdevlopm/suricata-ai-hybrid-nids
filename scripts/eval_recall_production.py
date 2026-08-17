@@ -21,8 +21,9 @@ from sklearn.metrics import classification_report, confusion_matrix
 
 from trainv8 import extract_features_v7, CLASS_MAP, INV_CLASS_MAP
 
-MODEL_PATH = Path("/run/media/mehmet/siber data1/ai modeli xgboost/models/ids_model_v8_final.pkl")
-DATA_ROOT = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/relabeled_combined")
+BASE_DIR = Path(__file__).resolve().parent.parent
+MODEL_PATH = BASE_DIR / "models/ids_model_v8_final.pkl"
+DATA_ROOT = BASE_DIR / "data/relabeled_combined"
 
 print("=" * 80)
 print("1. LOADING PRODUCTION MODEL BUNDLE (models/ids_model_v8_final.pkl)")

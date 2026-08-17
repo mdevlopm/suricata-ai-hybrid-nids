@@ -58,7 +58,7 @@ import tensorflow as tf
 # ============================================================================
 DEFAULT_EVE         = Path("/var/log/suricata/eve.json")
 DEFAULT_OUT         = Path("/var/log/suricata/ai_alerts_hybrid.json")
-DEFAULT_XGB_MODEL   = Path("/run/media/mehmet/siber data1/ai modeli xgboost/ids_model_v7_final.pkl")
+DEFAULT_XGB_MODEL   = Path("./ids_model_v7_final.pkl")
 DEFAULT_LSTM_MODEL  = Path(__file__).parent / "lstm_best.keras"
 DEFAULT_LSTM_SCALER = Path(__file__).parent / "lstm_scaler.pkl"
 DEFAULT_LSTM_META   = Path(__file__).parent / "lstm_metadata.pkl"

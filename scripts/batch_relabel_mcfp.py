@@ -159,7 +159,7 @@ def process_single_scenario(sc_dir: Path, eve_sc_dir: Path, config_path: Path, o
     return sc_name, s_tot, s_mat, pct, s_bot
 
 def main():
-    base_dir = Path("/run/media/mehmet/siber data1/ai modeli xgboost")
+    base_dir = Path(__file__).resolve().parent.parent
     mcfp_dir = base_dir / "data/MCFP"
     raw_mcfp_json = base_dir / "data/raw_pcap/mcfp felk/eve_botnet_mcfp.json"
     eve_base_dir = base_dir / "data/eve/MCFP"

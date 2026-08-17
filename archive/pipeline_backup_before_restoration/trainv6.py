@@ -47,8 +47,8 @@ log = logging.getLogger("trainv6")
 # ============================================================================
 # 1) DOSYA YOLLARI
 # ============================================================================
-BASE_DIR  = Path("/run/media/mehmet/siber data1/ai modeli xgboost/pcap dosyaları ve veri setleri")
-OUT_MODEL = Path("/run/media/mehmet/siber data1/ai modeli xgboost/ids_model_v6_final.pkl")
+BASE_DIR  = Path("./pcap dosyaları ve veri setleri")
+OUT_MODEL = Path("./ids_model_v6_final.pkl")
 
 # Egitim sinirlari (RAM korumasi)
 MAX_BENIGN_PER_FILE        = 300_000    # Omurga Benign basina ust sinir

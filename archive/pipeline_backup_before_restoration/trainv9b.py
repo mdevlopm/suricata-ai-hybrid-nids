@@ -36,10 +36,10 @@ warnings.filterwarnings("ignore")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)-7s | %(message)s", datefmt="%H:%M:%S")
 log = logging.getLogger("trainv9b")
 
-DEFAULT_DATA_ROOT = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/relabeled_combined")
-DEFAULT_CTU13_BOT = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/relabeled_ctu13/eve_Bot.json")
-DEFAULT_TARGET_EVE = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/eve/cicids2017_thursday_eve.json")
-DEFAULT_OUT_MODEL = Path("/run/media/mehmet/siber data1/ai modeli xgboost/ids_model_v9b_final.pkl")
+DEFAULT_DATA_ROOT = Path("./data/relabeled_combined")
+DEFAULT_CTU13_BOT = Path("./data/relabeled_ctu13/eve_Bot.json")
+DEFAULT_TARGET_EVE = Path("./data/eve/cicids2017_thursday_eve.json")
+DEFAULT_OUT_MODEL = Path("./ids_model_v9b_final.pkl")
 
 CLASS_MAP = {
     "Benign": 0,

@@ -28,7 +28,7 @@ import numpy as np
 
 # ── VARSAYILAN YOLLAR ──────────────────────────────────────────────────────
 # Eğitim kodundaki OUT_MODEL ile aynı
-DEFAULT_MODEL = Path("/run/media/mehmet/siber data/ai modeli xgboost/ids_model_v2.pkl")
+DEFAULT_MODEL = Path("./ids_model_v2.pkl")
 DEFAULT_EVE   = Path("/var/log/suricata/eve.json")
 DEFAULT_OUT   = Path("/var/log/suricata/ai_alerts.json")
 POLL_S        = 0.5                     # gerçek zamanlı okuma aralığı

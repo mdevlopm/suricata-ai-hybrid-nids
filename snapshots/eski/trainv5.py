@@ -18,8 +18,8 @@ from sklearn.utils.class_weight import compute_sample_weight
 import xgboost as xgb
 warnings.filterwarnings("ignore")
 
-BASE_DIR = Path("/run/media/mehmet/siber data1/ai modeli xgboost/pcap dosyaları ve veri setleri")
-OUT_MODEL = Path("/run/media/mehmet/siber data1/ai modeli xgboost/ids_model_v5_optimized.pkl")
+BASE_DIR = Path("./pcap dosyaları ve veri setleri")
+OUT_MODEL = Path("./ids_model_v5_optimized.pkl")
 
 EVE_FILES = {
     "Benign"      : [   # Liste hâline getirildi

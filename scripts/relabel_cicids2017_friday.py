@@ -35,7 +35,7 @@ def parse_utc_dt(ts_str: str) -> datetime:
         return None
 
 def main():
-    base_dir = Path("/run/media/mehmet/siber data1/ai modeli xgboost")
+    base_dir = Path(__file__).resolve().parent.parent
     eve_path = base_dir / "data/eve/cicids2017_friday/eve.json"
     out_dir = base_dir / "data/relabeled_cicids2017"
     out_dir.mkdir(parents=True, exist_ok=True)

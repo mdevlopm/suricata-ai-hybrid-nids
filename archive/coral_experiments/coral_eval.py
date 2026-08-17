@@ -17,14 +17,14 @@ import importlib.util
 
 # Load features module - extract_features_v7 is in hybrid_inference.py
 spec = importlib.util.spec_from_file_location("hybrid_inference", 
-    "/run/media/mehmet/siber data1/ai modeli xgboost/model eğitim dosyaları/hybrid_inference.py")
+    "./model eğitim dosyaları/hybrid_inference.py")
 hybrid_module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(hybrid_module)
 extract_features_v7 = hybrid_module.extract_features_v7
 
 # Load CORAL adapter
 spec2 = importlib.util.spec_from_file_location("coral", 
-    "/run/media/mehmet/siber data1/ai modeli xgboost/coral_domain_adaptation.py")
+    "./coral_domain_adaptation.py")
 coral_module = importlib.util.module_from_spec(spec2)
 spec2.loader.exec_module(coral_module)
 CORALDomainAdapter = coral_module.CORALDomainAdapter
@@ -98,10 +98,10 @@ def main():
     print("=" * 75)
     
     # Paths
-    model_path = "/run/media/mehmet/siber data1/ai modeli xgboost/ids_model_v7_final.pkl"
-    source_eve = "/run/media/mehmet/siber data1/ai modeli xgboost/eve_labeled/full_dataset/eve.json"
-    target_eve = "/run/media/mehmet/siber data1/ai modeli xgboost/eve_labeled/test_20/eve_test20.json"
-    target_labels = "/run/media/mehmet/siber data1/ai modeli xgboost/eve_labeled/test_20/labels.json"
+    model_path = "./ids_model_v7_final.pkl"
+    source_eve = "./eve_labeled/full_dataset/eve.json"
+    target_eve = "./eve_labeled/test_20/eve_test20.json"
+    target_labels = "./eve_labeled/test_20/labels.json"
     
     # Load model
     print("\n[1/6] Loading XGBoost v7 model...")
@@ -184,6 +184,6 @@ def main():
 if __name__ == '__main__':
     results = main()
     import json
-    with open('/run/media/mehmet/siber data1/ai modeli xgboost/coral_eval_results.json', 'w') as f:
+    with open('./coral_eval_results.json', 'w') as f:
         json.dump(results, f, indent=2)
     print("\nResults saved to coral_eval_results.json")

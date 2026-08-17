@@ -2,8 +2,10 @@
 # Suricata toplu EVE JSON uretimi — yeni config (flow+tcpflags, http, tls, dns)
 set -e
 
-BASE="/run/media/mehmet/siber data1/ai modeli xgboost/data/raw_pcap"
-CONFIG="/run/media/mehmet/siber data1/ai modeli xgboost/config/suricata_feature_extract.yaml"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(dirname "$SCRIPT_DIR")"
+BASE="${REPO_DIR}/data/raw_pcap"
+CONFIG="${REPO_DIR}/config/suricata_feature_extract.yaml"
 LOG="/tmp/suricata_batch.log"
 rm -f "$LOG"
 

@@ -36,11 +36,12 @@ warnings.filterwarnings("ignore")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)-7s | %(message)s", datefmt="%H:%M:%S")
 log = logging.getLogger("trainv9")
 
-DEFAULT_DATA_ROOT = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/relabeled_combined")
-DEFAULT_CTU13_BOT = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/relabeled_ctu13/eve_Bot.json")
-DEFAULT_MCFP_EVE = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/raw_pcap/mcfp felk/eve_botnet_mcfp.json")
-DEFAULT_TARGET_EVE = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/eve/cicids2017_thursday_eve.json")
-DEFAULT_OUT_MODEL = Path("/run/media/mehmet/siber data1/ai modeli xgboost/ids_model_v9_final.pkl")
+BASE_DIR = Path(__file__).resolve().parent.parent
+DEFAULT_DATA_ROOT = BASE_DIR / "data/relabeled_combined"
+DEFAULT_CTU13_BOT = BASE_DIR / "data/relabeled_ctu13/eve_Bot.json"
+DEFAULT_MCFP_EVE = BASE_DIR / "data/raw_pcap/mcfp felk/eve_botnet_mcfp.json"
+DEFAULT_TARGET_EVE = BASE_DIR / "data/eve/cicids2017_thursday_eve.json"
+DEFAULT_OUT_MODEL = BASE_DIR / "models/ids_model_v9_final.pkl"
 
 CLASS_MAP = {
     "Benign": 0,

@@ -26,7 +26,7 @@ from sklearn.metrics import (
 )
 import xgboost as xgb
 
-BASE      = Path("/run/media/mehmet/siber data/ai modeli xgboost")
+BASE      = Path(".")
 CSV_DIR   = BASE / "pcap dosyaları ve veri setleri/cic ml trafikleri cvs ler"
 OUT_MODEL = BASE / "ids_model.pkl"
 

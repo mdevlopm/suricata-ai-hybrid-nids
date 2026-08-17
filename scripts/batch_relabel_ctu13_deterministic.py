@@ -44,7 +44,7 @@ def make_key(ip1, port1, ip2, port2, proto):
     return (p1, p2, norm_p(proto)) if p1 <= p2 else (p2, p1, norm_p(proto))
 
 def main():
-    base_dir = Path("/run/media/mehmet/siber data1/ai modeli xgboost")
+    base_dir = Path(__file__).resolve().parent.parent
     ctu_dir = base_dir / "data/CTU-13"
     eve_dir = base_dir / "data/eve/CTU-13"
     out_dir = base_dir / "data/relabeled_ctu13"

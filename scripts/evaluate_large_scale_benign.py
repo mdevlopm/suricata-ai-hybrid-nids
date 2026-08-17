@@ -18,9 +18,9 @@ import xgboost as xgb
 sys.path.insert(0, str(Path(__file__).parent.parent / "pipeline"))
 from trainv8 import extract_features_v7, CLASS_MAP
 
-BASE_DIR = Path("/run/media/mehmet/siber data1/ai modeli xgboost")
+BASE_DIR = Path(__file__).resolve().parent.parent
 BENIGN_PATH = BASE_DIR / "data/relabeled_cicids2017/eve_Benign.json"
-MODEL_PATH = BASE_DIR / "models/ids_model_v10c_final.pkl"
+MODEL_PATH = BASE_DIR / "models/baseline/ids_model_v10c_baseline.pkl"
 
 def main():
     print("=" * 115)

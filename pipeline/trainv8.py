@@ -31,10 +31,11 @@ warnings.filterwarnings("ignore")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)-7s | %(message)s", datefmt="%H:%M:%S")
 log = logging.getLogger("trainv8")
 
-DEFAULT_DATA_ROOT = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/relabeled_combined")
-DEFAULT_SOURCE_EVE = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/eve/full_dataset/eve.json")
-DEFAULT_TARGET_EVE = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/eve/cicids2017_thursday_eve.json")
-DEFAULT_OUT_MODEL = Path("/run/media/mehmet/siber data1/ai modeli xgboost/models/ids_model_v8_final.pkl")
+BASE_DIR = Path(__file__).resolve().parent.parent
+DEFAULT_DATA_ROOT = BASE_DIR / "data/relabeled_combined"
+DEFAULT_SOURCE_EVE = BASE_DIR / "data/eve/full_dataset/eve.json"
+DEFAULT_TARGET_EVE = BASE_DIR / "data/eve/cicids2017_thursday_eve.json"
+DEFAULT_OUT_MODEL = BASE_DIR / "models/ids_model_v8_final.pkl"
 
 CLASS_MAP = {
     "Benign": 0,

@@ -55,7 +55,7 @@ warnings.filterwarnings("ignore")
 mixed_precision.set_global_policy("mixed_float16")
 
 # ── AYARLAR ─────────────────────────────────────────────────────────────────
-BASE_DIR = Path("/run/media/mehmet/siber data1/ai modeli xgboost/pcap dosyaları ve veri setleri")
+BASE_DIR = Path("./pcap dosyaları ve veri setleri")
 OUT_DIR  = Path(__file__).parent.resolve()
 
 WINDOW_SIZE = 40

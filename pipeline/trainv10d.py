@@ -27,7 +27,7 @@ from sklearn.utils.class_weight import compute_sample_weight
 sys.path.insert(0, str(Path(__file__).parent))
 from trainv8 import extract_features_v7, CLASS_MAP
 
-BASE_DIR = Path("/run/media/mehmet/siber data1/ai modeli xgboost")
+BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_2018 = BASE_DIR / "data/relabeled_combined"
 DATA_CTU13 = BASE_DIR / "data/relabeled_ctu13"
 DATA_2017 = BASE_DIR / "data/relabeled_cicids2017"

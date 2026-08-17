@@ -33,8 +33,8 @@ warnings.filterwarnings("ignore")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)-7s | %(message)s", datefmt="%H:%M:%S")
 log = logging.getLogger("trainv7")
 
-BASE_DIR  = Path("/run/media/mehmet/siber data1/ai modeli xgboost/pcap dosyaları ve veri setleri")
-OUT_MODEL = Path("/run/media/mehmet/siber data1/ai modeli xgboost/ids_model_v7_final.pkl")
+BASE_DIR  = Path(__file__).resolve().parent.parent / "data"
+OUT_MODEL = Path(__file__).resolve().parent.parent / "models" / "archive" / "ids_model_v7_final.pkl"
 
 MAX_BENIGN_PER_FILE        = 300_000
 MAX_PER_ATTACK_CLASS_TOTAL = 500_000

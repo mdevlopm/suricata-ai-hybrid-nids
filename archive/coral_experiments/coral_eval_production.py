@@ -32,9 +32,9 @@ def main():
     print("=" * 70)
     
     # Paths
-    model_path = "/run/media/mehmet/siber data1/ai modeli xgboost/ids_model_v7_final.pkl"
-    source_eve = "/run/media/mehmet/siber data1/ai modeli xgboost/eve_labeled/full_dataset/eve.json"
-    target_eve = "/run/media/mehmet/siber data1/ai modeli xgboost/pcap dosyaları ve veri setleri/Thursday-WorkingHours.pcap"
+    model_path = "./ids_model_v7_final.pkl"
+    source_eve = "./eve_labeled/full_dataset/eve.json"
+    target_eve = "./pcap dosyaları ve veri setleri/Thursday-WorkingHours.pcap"
     # Use the Suricata-processed eve.json from Thursday
     thursday_eve = "/tmp/suricata_flow/eve.json"
     
@@ -130,6 +130,6 @@ def main():
 if __name__ == '__main__':
     results = main()
     import json
-    with open('/run/media/mehmet/siber data1/ai modeli xgboost/coral_eval_final.json', 'w') as f:
+    with open('./coral_eval_final.json', 'w') as f:
         json.dump(results, f, indent=2)
     print("\nResults saved to coral_eval_final.json")

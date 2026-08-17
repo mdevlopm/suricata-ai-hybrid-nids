@@ -17,8 +17,9 @@ import numpy as np
 
 from trainv8 import extract_features_v7
 
-MODEL_PATH = Path("/run/media/mehmet/siber data1/ai modeli xgboost/models/ids_model_v8_final.pkl")
-RAW_PCAP_DIR = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/raw_pcap")
+BASE_DIR = Path(__file__).resolve().parent.parent
+MODEL_PATH = BASE_DIR / "models/ids_model_v8_final.pkl"
+RAW_PCAP_DIR = BASE_DIR / "data/raw_pcap"
 
 with open(MODEL_PATH, 'rb') as f:
     bundle = pickle.load(f)

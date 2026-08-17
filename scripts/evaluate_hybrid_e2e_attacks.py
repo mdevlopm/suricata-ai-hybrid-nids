@@ -11,7 +11,7 @@ import subprocess
 import json
 from pathlib import Path
 
-BASE_DIR = Path("/run/media/mehmet/siber data1/ai modeli xgboost")
+BASE_DIR = Path(__file__).resolve().parent.parent
 HYBRID_SCRIPT = BASE_DIR / "pipeline/hybrid_inference.py"
 
 attack_files = {

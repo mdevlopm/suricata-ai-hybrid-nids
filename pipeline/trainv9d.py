@@ -33,10 +33,11 @@ warnings.filterwarnings("ignore")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)-7s | %(message)s", datefmt="%H:%M:%S")
 log = logging.getLogger("trainv9d")
 
-DEFAULT_DATA_ROOT = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/relabeled_combined")
-DEFAULT_CTU13_BOT = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/relabeled_ctu13/eve_Bot.json")
-DEFAULT_TARGET_EVE = Path("/run/media/mehmet/siber data1/ai modeli xgboost/data/eve/eve.json")  # 334,783 flows full file!
-DEFAULT_OUT_MODEL = Path("/run/media/mehmet/siber data1/ai modeli xgboost/ids_model_v9d_final.pkl")
+BASE_DIR = Path(__file__).resolve().parent.parent
+DEFAULT_DATA_ROOT = BASE_DIR / "data/relabeled_combined"
+DEFAULT_CTU13_BOT = BASE_DIR / "data/relabeled_ctu13/eve_Bot.json"
+DEFAULT_TARGET_EVE = BASE_DIR / "data/eve/eve.json"
+DEFAULT_OUT_MODEL = BASE_DIR / "models/ids_model_v9d_final.pkl"
 
 CLASS_MAP = {
     "Benign": 0,

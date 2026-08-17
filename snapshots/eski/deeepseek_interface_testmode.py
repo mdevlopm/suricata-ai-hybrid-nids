@@ -28,7 +28,7 @@ from pathlib import Path
 import numpy as np
 
 # ── VARSAYILAN YOLLAR ──────────────────────────────────────────────────────
-DEFAULT_MODEL = Path("/run/media/mehmet/siber data/ai modeli xgboost/ids_model_v2.pkl")
+DEFAULT_MODEL = Path("./ids_model_v2.pkl")
 DEFAULT_EVE   = Path("/var/log/suricata/eve.json")
 DEFAULT_OUT   = Path("./ai_alerts.json")   # yazma yetkisi olan bir yere çevrildi
 POLL_S        = 0.5

@@ -10,7 +10,7 @@ from datetime import datetime
 import numpy as np
 
 # ── DÜZELTİLDİ: "siber data" → "siber data1" ──
-DEFAULT_MODEL = Path("/run/media/mehmet/siber data1/ai modeli xgboost/ids_model_v4_optimized.pkl")
+DEFAULT_MODEL = Path("./ids_model_v4_optimized.pkl")
 DEFAULT_EVE   = Path("/var/log/suricata/eve.json")
 DEFAULT_OUT   = Path("./ai_alerts.json")
 POLL_S        = 0.5

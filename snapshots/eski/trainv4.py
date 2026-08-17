@@ -16,8 +16,8 @@ from sklearn.metrics import (
 import xgboost as xgb
 warnings.filterwarnings("ignore")
 
-BASE_DIR = Path("/run/media/mehmet/siber data/ai modeli xgboost/pcap dosyaları ve veri setleri")
-OUT_MODEL = Path("/run/media/mehmet/siber data/ai modeli xgboost/ids_model_v4_optimized.pkl")
+BASE_DIR = Path("./pcap dosyaları ve veri setleri")
+OUT_MODEL = Path("./ids_model_v4_optimized.pkl")
 
 EVE_FILES = {
     "Benign"      : BASE_DIR / "Wednesday-14-02-2018/eve_Benign.json",

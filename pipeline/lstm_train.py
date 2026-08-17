@@ -74,7 +74,7 @@ def focal_loss(gamma=2.0, alpha=None):
     return loss
 
 # ── AYARLAR ─────────────────────────────────────────────────────────────────
-BASE_DIR = Path("/run/media/mehmet/siber data1/ai modeli xgboost/pcap dosyaları ve veri setleri")
+BASE_DIR = Path(__file__).resolve().parent.parent / "data"
 OUT_DIR  = Path(__file__).parent.resolve()
 
 WINDOW_SIZE = 40
